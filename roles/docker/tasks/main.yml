@@ -1,0 +1,26 @@
+---
+# Tasks file for docker
+
+- include_tasks: docker-debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- include_tasks: docker-alpine.yml
+  when: ansible_facts.os_family == "Alpine"
+
+- name: Ensure Docker service is enabled and started
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add phil user to docker group
+  user:
+    name: phil
+    groups: docker
+    append: yes
+
+- name: Add ansible user to docker group
+  user:
+    name: ansible
+    groups: docker
+    append: yes

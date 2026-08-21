@@ -1,0 +1,53 @@
+---
+# Tasks file for initial setup
+
+- name: Enable non-free and non-free-firmware repositories
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }} main non-free non-free-firmware"
+    state: present
+    update_cache: yes
+
+- name: Install base packages
+  tags: packages,base
+  ansible.builtin.apt:
+    name:
+      - sudo
+      - curl
+      - htop
+      - iftop
+      - iotop
+      - vim
+      - openssh-server
+      - rsync
+      - unattended-upgrades
+      - aptitude
+      - apt-file
+      - tmux
+      - lnav
+      - parted
+      - fastfetch
+      - tree
+      - termshark
+    force_apt_get: true
+
+- name: Copy bash aliases to skel
+  tags: base,config
+  ansible.builtin.copy:
+    src: bash_aliases
+    dest: /etc/skel/.bash_aliases
+    owner: root
+    group: root
+    mode: "0644"
+
+
+# TODO    
+#- name: create unpriviledged user
+
+- name: Copy bash aliases to user home
+  tags: base,config
+  ansible.builtin.copy:
+    src: bash_aliases
+    dest: /home/{{ setup_user }}/.bash_aliases
+    owner: phil
+    group: phil
+    mode: "0644"

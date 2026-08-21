@@ -1,0 +1,10 @@
+---
+# Playbook used for new hosts setup.
+- name: Initial setup for new hosts
+  hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - bootstrap
+    - setup
+    - docker

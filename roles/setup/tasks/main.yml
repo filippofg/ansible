@@ -1,0 +1,10 @@
+---
+# Tasks for setup
+
+- name: Debian setup
+  include_tasks: tasks/setup-debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- name: Alpine setup
+  include_tasks: tasks/setup-alpine.yml
+  when: ansible_facts.os_family == "Alpine"

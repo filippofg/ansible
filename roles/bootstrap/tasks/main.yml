@@ -1,0 +1,37 @@
+---
+# Tasks for bootstrap
+
+- name: Debian bootstrap
+  include_tasks: tasks/bootstrap-debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- name: Alpine bootstrap
+  include_tasks: tasks/bootstrap-alpine.yml
+  when: ansible_facts.os_family == "Alpine"
+
+- name: Create ansible user
+  user:
+    name: ansible
+    groups: sudo
+
+- name: Add ssh key for ansible
+  tags: ssh
+  authorized_key:
+    user: ansible
+    key: "{{ lookup('file', 'id_ansible.pub') }}"
+
+- name: Add sudoers file for passwordless ansible sudo
+  tags: sudo
+  copy:
+    src: sudoer_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: "0440"
+
+# This needs to go *after* passwordless sudo and key exchange
+- name: Remove ansible password
+  tags: password
+  user:
+    name: ansible
+    password: "*"

@@ -1,0 +1,29 @@
+- name: Enable community repository
+  ansible.builtin.lineinfile:
+    path: /etc/apk/repositories
+    regexp: '^#(.*\/community)$'
+    line: '\1'
+    backrefs: yes
+    state: present
+  notify: Update apk cache
+
+- name: Update apk cache
+  ansible.builtin.apk:
+    update_cache: yes
+
+- name: Install sudo
+  ansible.builtin.apk:
+    name: sudo
+    state: present
+
+- name: Create sudo group
+  ansible.builtin.group:
+    name: sudo
+    state: present
+
+- name: Configure sudoers for sudo group
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: '^# %sudo'
+    line: '%sudo ALL=(ALL) ALL'
+    state: present

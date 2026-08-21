@@ -1,0 +1,2 @@
+# Enable passwordless root authentication for ansible user
+ansible ALL=(ALL) NOPASSWD: ALL
