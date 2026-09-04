@@ -1,0 +1,33 @@
+# sudo alias expansion
+alias sudo='sudo '
+
+# ls
+LS_OPTIONS="--color=auto -F"
+alias ls="ls $LS_OPTIONS"
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -l'
+
+# rm confirmation
+alias rm='rm -i'
+
+# git
+alias gst='git status'
+alias gd='git diff'
+alias gl='git pull'
+alias gf='git fetch'
+alias glo='git log --oneline --decorate'
+alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
+alias gp='git push'
+alias gpo='git push --dry-run'
+alias ga='git add'
+alias gc='git commit --verbose'
+alias gsw='git switch'
+alias grs='git restore'
+
+# misc
+alias ..='cd ..'
+alias ...='cd ../..'
+alias cd..='cd ..' # common typo
+alias dmesgh='dmesg -H --color=always'
+alias lzd='lazydocker'

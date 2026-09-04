@@ -1,0 +1,9 @@
+syntax on
+filetype plugin indent on
+
+set number
+set hlsearch
+set smarttab
+set mouse=a
+set incsearch
+set ignorecase

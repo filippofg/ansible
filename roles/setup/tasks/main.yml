@@ -8,3 +8,20 @@
 - name: Alpine setup
   include_tasks: tasks/setup-alpine.yml
   when: ansible_facts.os_family == "Alpine"
+
+- name: Copy environment
+  tags: config
+  ansible.builtin.copy:
+    src: files/environment
+    dest: /etc/environment
+    owner: root
+    mode: '0664'
+
+- name: Copy tmux config
+  tags: config
+  ansible.builtin.copy:
+    src: files/tmux.conf
+    dest: /etc/tmux
+    owner: root
+    mode: '0664'
+
